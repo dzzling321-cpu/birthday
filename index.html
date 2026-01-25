@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Happy Birthday Saad</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{
@@ -14,247 +15,298 @@ body{
   align-items:center;
   overflow:hidden;
 }
-
 .container{
   background:#fff;
   width:380px;
+  max-width:95%;
   border-radius:20px;
   padding:20px;
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,0.3);
   position:relative;
-  overflow:hidden;
 }
 
-h1{color:#ff3d7f;margin-bottom:10px;font-size:32px;opacity:0;transform:translateY(-20px);transition:0.6s;}
-p{color:#444;font-size:16px;line-height:1.6;opacity:0;transform:translateY(20px);transition:0.6s;}
-button{margin:10px 5px 0 5px;padding:10px 25px;background:#ff3d7f;color:#fff;border:none;border-radius:35px;font-size:16px;cursor:pointer;transition:0.3s;}
-button:hover{background:#e6336f;}
-button:active{transform:scale(0.95);}
-.step{display:none;}
-.step.active{display:block;}
-.heart{font-size:45px;margin-top:10px;animation:beat 1s infinite;opacity:0;transition:0.6s;}
-@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
-.nick{font-size:30px;font-weight:700;color:#ff3d7f;margin-top:15px;opacity:0;transform:scale(0.8);transition:0.5s;}
-.fadeIn{text-align:center;opacity:1 !important;transform:translateY(0) scale(1) !important;}
+/* MOBILE */
+@media(max-width:420px){
+  h1{font-size:24px}
+  p{font-size:15px}
+  button{padding:12px 28px;font-size:16px}
+}
 
-/* Envelope Styles Big & Cute */
+h1{color:#ff3d7f;margin-bottom:10px;opacity:0;transform:translateY(-20px);transition:.6s}
+p{color:#444;line-height:1.6;opacity:0;transform:translateY(20px);transition:.6s}
+button{
+  margin:10px 5px 0;
+  padding:10px 25px;
+  background:#ff3d7f;
+  color:#fff;
+  border:none;
+  border-radius:35px;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{background:#e6336f}
+
+.step{display:none}
+.step.active{display:block}
+.fadeIn{opacity:1!important;transform:none!important}
+
+/* PASSWORD */
+.lock{
+  position:absolute; inset:0; background:#fff; border-radius:20px;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  z-index:10;
+}
+.lock input{
+  padding:10px;
+  border-radius:20px;
+  border:1px solid #ccc;
+  text-align:center;
+}
+.error{color:red;font-size:14px}
+
+/* NICKNAME */
+.nick{
+  font-size:30px;
+  font-weight:700;
+  color:#ff3d7f;
+}
+.arrow{
+  background:#ffe3ee;
+  color:#ff3d7f;
+  font-size:22px;
+  padding:6px 14px;
+  border-radius:50%;
+  cursor:pointer;
+}
+.arrow:hover{background:#ffd0e2}
+
+.heart{
+  font-size:45px;
+  margin-top:10px;
+  animation:beat 1s infinite;
+}
+@keyframes beat{50%{transform:scale(1.3)}}
+
+/* ENVELOPE */
 .envelope{
   width:280px;
-  height:180px;
-  margin:40px auto;
+  height:190px;
+  margin:25px auto;
   position:relative;
-  perspective:600px;
 }
-
-.flap{
-  width:280px;
-  height:90px;
-  background:linear-gradient(to bottom,#ff3d7f,#ff6fae);
-  position:absolute;
-  top:0;
-  left:0;
-  transform-origin:top center;
-  transition:1s;
-  border-radius:12px 12px 0 0;
-  box-shadow:0 6px 15px rgba(0,0,0,0.2);
-}
-
-.body{
-  width:280px;
-  height:180px;
-  background:#fff7f7;
-  border:3px solid #ff3d7f;
-  border-radius:0 0 12px 12px;
-  position:absolute;
-  top:0;
-  left:0;
-  overflow:hidden;
-  box-shadow:0 6px 15px rgba(0,0,0,0.15);
-  font-family: 'Cursive', 'Segoe UI', sans-serif;
-}
-
-.letterInside{
-  padding:20px;
-  text-align:left;
-  opacity:0;
-  position:absolute;
-  top:0;
-  left:0;
+.env-back{
   width:100%;
   height:100%;
-  color:#444;
-  line-height:1.6;
-  transition:1s;
-  overflow:auto;
-  font-size:15px;
-  white-space:pre-wrap;
-}
-
-.open .flap{
-  transform:rotateX(-180deg);
-  box-shadow:none;
-}
-
-.open .letterInside{
-  opacity:1;
-}
-
-/* Floating hearts */
-.floating-heart{
+  background:#fff0f6;
+  border-radius:15px;
+  border:3px solid #ff3d7f;
   position:absolute;
-  font-size:18px;
-  animation:floatHeart 3s ease-in forwards;
+}
+.env-flap{
+  width:100%;
+  height:100%;
+  background:#ff3d7f;
+  clip-path:polygon(0 0,100% 0,50% 55%);
+  position:absolute;
+  transform-origin:top;
+  transition:1s;
+  z-index:3;
+}
+.env-letter{
+  position:absolute;
+  inset:15px;
+  background:white;
+  border-radius:10px;
+  padding:15px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.6;
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s;
+}
+.env-letter::-webkit-scrollbar{display:none}
+
+.envelope.open .env-flap{transform:rotateX(180deg)}
+.envelope.open .env-letter{
+  opacity:1;
+  transform:translateY(-10px);
 }
 
-@keyframes floatHeart{
-  0%{opacity:1; transform: translateY(0) scale(1);}
-  100%{opacity:0; transform: translateY(-150px) scale(1.5);}
+/* FINAL */
+.final{
+  color:#ff3d7f;
+  text-shadow:0 0 10px rgba(255,61,127,.5);
+}
+.bigHeart{
+  font-size:70px;
+  animation:beat 1s infinite;
+}
+
+/* FLOATING HEARTS */
+.floating{
+  position:absolute;
+  font-size:20px;
+  animation:floatUp 6s linear infinite;
+  opacity:.6;
+}
+@keyframes floatUp{
+  from{bottom:-20px}
+  to{bottom:110%}
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-  <!-- STEP 1 -->
-  <div class="step active">
-    <h1>🎉 Happy Birthday</h1>
-    <p>Someone very special was born today 💖</p>
-    <button onclick="nextStep()">Next</button>
-  </div>
+<!-- PASSWORD -->
+<div class="lock" id="lock">
+  <h1 style="opacity:1">🔐 Enter Password</h1>
+  <input type="password" id="pass">
+  <button onclick="unlock()">Open</button>
+  <div class="error" id="error"></div>
+</div>
 
-  <!-- STEP 2 Nicknames -->
-  <div class="step">
-    <h1>Saad ❤️</h1>
-    <div class="nick" id="nickname">Lallu</div>
-    <button onclick="nextNickname()">Next Nickname</button>
-    <div class="heart">❤️</div>
-    <div>
-      
-      <button onclick="nextStep()">Next</button>
-    </div>
-  </div>
+<!-- STEP 1 -->
+<div class="step active">
+  <h1>🎉 Happy Birthday Lallu</h1>
+  <p>Someone very special was born today 💖</p>
+  <button onclick="nextStep()">Next</button>
+</div>
 
-  <!-- STEP 3 Wishing -->
-  <div class="step">
-    <h1>✨ Wishing You</h1>
-    <p>May your day be filled with love, joy, and endless happiness 🌟</p>
-    <div>
-     
-      <button onclick="nextStep()">Next</button>
-    </div>
+<!-- STEP 2 -->
+<div class="step">
+  <h1>Saad ❤️</h1>
+  <div style="display:flex;align-items:center;justify-content:center;gap:15px;margin-top:15px;">
+    <div class="arrow" onclick="prevNickname()">&lt;</div>
+    <div class="nick fadeIn" id="nickname">Lallu</div>
+    <div class="arrow" onclick="nextNickname()">&gt;</div>
   </div>
+  <div class="heart fadeIn">❤️</div>
+  <button onclick="nextStep()">Next</button>
+</div>
 
-  <!-- STEP 4 Letter with Big Stylish Envelope -->
-  <div class="step">
-    <h1>💌 A Letter For You</h1>
-    <div class="envelope" id="envelope">
-      <div class="flap"></div>
-      <div class="body">
-        <div class="letterInside" id="letter"></div>
-      </div>
-    </div>
-    <button onclick="openEnvelope()" style="margin-top:20px;">Open Letter</button>
-    <div>
-      <button onclick="prevStep()">Back</button>
-    </div>
+<!-- STEP 3 -->
+<div class="step">
+  <h1>✨ love you so much 💕</h1>
+  <p>You make my world brighter every single day 🌟</p>
+  <button onclick="nextStep()">Next</button>
+</div>
+
+<!-- STEP 4 LETTER -->
+<div class="step">
+  <h1>💌 A Letter For You</h1>
+  <div class="envelope" id="envelope">
+    <div class="env-back"></div>
+    <div class="env-flap"></div>
+    <div class="env-letter" id="letter"></div>
   </div>
+  <button id="letterBtn" onclick="toggleEnvelope()">Open Letter</button>
+  <button onclick="nextStep()">Next Surprise</button>
+</div>
+
+<!-- STEP 5 -->
+<div class="step">
+  <div class="final fadeIn">
+    <div class="bigHeart">❤️</div>
+    <h1 style="opacity:1">I Love You Saad</h1>
+    <p style="opacity:1">
+      Happy Birthday once again 💕  
+      You are my favorite person, always.
+    </p>
+  </div>
+</div>
 
 </div>
 
 <script>
+const PASSWORD="saad123";
+
+function unlock(){
+  if(pass.value===PASSWORD){
+    lock.style.display="none";
+    animateStep();
+    startHearts();
+  }else error.textContent="Wrong password 💔";
+}
+
 let current=0;
 const steps=document.querySelectorAll('.step');
-const nicknames=["Lallu","Babe","Darling","Meri Jaan"];
-let n=0;
 
-// Next Step
 function nextStep(){
-  if(current < steps.length-1){
-    steps[current].classList.remove('active');
-    current++;
-    steps[current].classList.add('active');
-    animateStep();
-  }
+  steps[current].classList.remove('active');
+  current++;
+  steps[current].classList.add('active');
+  animateStep();
 }
-
-// Previous Step
-function prevStep(){
-  if(current > 0){
-    steps[current].classList.remove('active');
-    current--;
-    steps[current].classList.add('active');
-    animateStep();
-  }
-}
-
-// Animate elements in active step
 function animateStep(){
-  const step=steps[current];
-  const elements=step.querySelectorAll('h1,p,.nick,.heart');
-  elements.forEach(el=>{
-    el.classList.add('fadeIn');
-  });
+  steps[current].querySelectorAll('h1,p,.nick,.heart,.final')
+  .forEach(el=>el.classList.add('fadeIn'));
 }
 
-// Nickname button
-function nextNickname(){
-  n=(n+1)%nicknames.length;
-  const nickEl=document.getElementById('nickname');
-  nickEl.style.opacity=0;
-  nickEl.style.transform='scale(0.5)';
-  setTimeout(()=>{
-    nickEl.textContent=nicknames[n];
-    nickEl.style.opacity=1;
-    nickEl.style.transform='scale(1)';
-  },200);
-}
+/* ORIGINAL NICKNAMES */
+const nicknames=[
+"Lallu",
+"Babe",
+"Darling",
+"Meri Jaan",
+"mere bhondu",
+"daddy💋🌚",
+"sweatheart"
+];
+let n=0;
+function nextNickname(){n=(n+1)%nicknames.length;nickname.textContent=nicknames[n]}
+function prevNickname(){n=(n-1+nicknames.length)%nicknames.length;nickname.textContent=nicknames[n]}
 
-// Letter text in English
+/* LETTER */
 const letterText=`Dear Saad,
 
-Happy Birthday! I hope this special day brings you all the happiness, love, and joy you deserve. You are amazing and I am so lucky to have you in my life. 
-
-May your dreams come true and may you always be surrounded by love and laughter. Remember that you are loved and cherished more than words can say.
-
+Happy Birthday! I hope this special day brings you all the happiness, love, and joy you deserve.
+You are amazing and I am so lucky to have you in my life. May your dreams come true and may you always be surrounded by love and laughter.
+Remember that you are loved and cherished more than words can say.
 Wishing you an incredible year ahead full of success, smiles, and unforgettable moments.
 
-With all my love, 💖
-- Your Lalli`;
+With all my love 💖
+— Your Lalli`;
 
-
-// Envelope open
-function openEnvelope(){
-  const envelope=document.getElementById('envelope');
-  const letter=document.getElementById('letter');
-  envelope.classList.add('open');
-
-  // Floating hearts animation
-  for(let i=0;i<5;i++){
-    let heart=document.createElement('div');
-    heart.className='floating-heart';
-    heart.style.left=Math.random()*280+'px';
-    heart.style.color=['#ff3d7f','#ff6fae','#ffb3c6'][Math.floor(Math.random()*3)];
-    heart.textContent='❤️';
-    envelope.appendChild(heart);
-    setTimeout(()=>{heart.remove();},3000);
+let opened=false;
+function toggleEnvelope(){
+  if(!opened){
+    envelope.classList.add("open");
+    letterBtn.textContent="Close Letter";
+    typeLetter();
+    opened=true;
+  }else{
+    envelope.classList.remove("open");
+    letterBtn.textContent="Open Letter";
+    opened=false;
   }
-
-  if(letter.innerHTML.trim()!=="") return;
+}
+function typeLetter(){
+  if(letter.innerHTML!=="")return;
   let i=0;
-  function typing(){
+  (function t(){
     if(i<letterText.length){
-      letter.innerHTML+=letterText.charAt(i)==='\n'?'<br>':letterText.charAt(i);
-      i++;
-      setTimeout(typing,40);
+      letter.innerHTML+=letterText[i]==="\n"?"<br>":letterText[i];
+      i++; setTimeout(t,30);
     }
-  }
-  typing();
+  })();
 }
 
-// Animate first step on load
-animateStep();
+/* FLOATING HEARTS */
+function startHearts(){
+  for(let i=0;i<20;i++){
+    let h=document.createElement("div");
+    h.className="floating";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"%";
+    h.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(h);
+  }
+}
 </script>
 
 </body>
